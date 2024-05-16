@@ -1,5 +1,6 @@
 process fastqc {
   tag { sample_id }
+  queue 'bgsi-batch-small-queue'
 
   publishDir params.versioned_outdir ? "${params.outdir}/${sample_id}/${params.pipeline_short_name}-v${params.pipeline_minor_version}-output" : "${params.outdir}", pattern: "*fastqc.*", mode: 'copy'
 
@@ -17,6 +18,8 @@ process fastqc {
 }
 
 process multiqc {
+  queue 'bgsi-batch-small-queue'
+
   publishDir params.versioned_outdir ? "${params.outdir}/${sample_id}/${params.pipeline_short_name}-v${params.pipeline_minor_version}-output" : "${params.outdir}", pattern: "*", mode: 'copy'
   
   input:
